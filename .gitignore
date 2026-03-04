@@ -1,0 +1,9 @@
+# Ignore Home Manager result links
+result
+result-*
+
+# Ignore direnv cache
+.direnv
+
+# Optional: uncomment to ignore flake.lock if you prefer
+# flake.lock
