@@ -1,46 +1,58 @@
-# Nix System Configuration for Arch WSL
+# Nix System Configuration for Nix Package Manager (dev Workflow)
 
-This directory contains Home Manager configuration for managing user packages and dotfiles on Arch Linux WSL using Nix as a secondary package manager.
+This directory contains Home Manager configuration for managing user packages and dotfiles on Linux using Nix as a secondary package manager.
 
 ## Overview
 
 Unlike full NixOS, this setup uses:
 - **Home Manager** - manages user packages and home directory configuration
-- **Nix** - package manager (installed alongside pacman)
+- **Nix** - package manager (installed alongside primary package manager)
 - **Flakes** - reproducible package management
 
-System-level configuration (networking, services, GUI apps) is handled by Arch/pacman.
+System-level configuration (networking, services, GUI apps) is handled by your Primary Package Manager.
 
 ## Setup
 
 ### 1. Initial Setup (First Time)
 
 ```bash
+git clone https://github.com/Venkat-Sundaraneedi/NixManager.git ~/.config/nix_system
+
 # Navigate to this directory
-cd ~/projects/solana/nix_system
+cd ~/.config/nix_system
 
 # Build and activate Home Manager configuration
 nix run home-manager/master -- switch --flake .#greed
 ```
 
-### 2. Subsequent Updates
+### 2. Post Initial Setup
+
+In flake.nix change the name from "greed" to your username in "homeConfigurations.greed" so you don't have to mention .#greed while doing `nh home switch`
+
+you will know your username with
 
 ```bash
-# Update and apply configuration
-home-manager switch --flake .#greed
-
-# Or if home-manager is not in PATH yet
-nix run home-manager/master -- switch --flake .#greed
+whoami
 ```
 
-### 3. Update Packages
+Setup env Variable NH_HOME_FLAKE,FLAKE to ~/.config/nix_system in your shell config (.bashrc,.zshrc,config.fish,config.nu,...etc)
+
+
+### 3. Subsequent Updates
 
 ```bash
-# Update flake inputs
+# Update and apply configuration (will work from anywhere if you setup env variable)
+nh home switch
+```
+
+### 4. Update Packages
+
+```bash
+# Update flake inputs (you have to be in project root to do this)
 nix flake update
 
 # Apply updates
-home-manager switch --flake .#greed
+nh home switch
 ```
 
 ## Structure
@@ -53,30 +65,12 @@ nix_system/
 └── README.md      # This file
 ```
 
-## GUI Applications
-
-GUI applications have been removed from this configuration. Install them via pacman:
-
-```bash
-# Browser
-sudo pacman -S brave
-
-# Terminal
-sudo pacman -S ghostty
-
-# File manager
-sudo pacman -S nautilus
-
-# Discord
-sudo pacman -S discord
-```
-
 ## Notes
 
 - State version is set to "25.11" (matching your NixOS config)
 - nixpkgs uses unstable channel
 - Flakes are enabled (required for this setup)
-- System services (mpd, etc.) should be configured via Arch systemd
+- System services (mpd, etc.) should be configured via Pimary Package Manager
 
 ## Useful Commands
 

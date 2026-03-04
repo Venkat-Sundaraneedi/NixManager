@@ -1,5 +1,5 @@
 {
-  description = "Home Manager configuration for Arch WSL";
+  description = "Home Manager configuration for Nix Package Manager";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
