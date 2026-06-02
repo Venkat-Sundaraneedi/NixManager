@@ -1,10 +1,8 @@
-{ pkgs, inputs, ... }:
+{ pkgs,  ... }:
 {
   nixpkgs = {
     config.allowUnfree = true;
     overlays = [
-      inputs.zig.overlays.default
-      inputs.neovim-nightly-overlay.overlays.default
     ];
   };
 
@@ -13,15 +11,17 @@
     homeFlake = /home/greed/.config/nix_system;
     clean = {
       enable = true;
-      extraArgs = "--keep 5 --keep-since 3d";
+      extraArgs = "--keep 1 --keep-since 1d";
     };
   };
 
   home.packages = with pkgs; [
     # Nix helpers
     nix-output-monitor
-    nvd
+    nixd
+    nixfmt-tree
     nix-prefetch-github
-    nixpkgs-review
+    nix-update
+    nixpkgs-reviewFull
   ];
 }

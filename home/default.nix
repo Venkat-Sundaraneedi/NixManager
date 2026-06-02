@@ -11,7 +11,6 @@
     username = "greed";
     homeDirectory = "/home/greed";
     stateVersion = "26.11";
-    # enableNixpkgsReleaseCheck = false;
   };
   programs.home-manager.enable = true;
 }
